@@ -9,6 +9,9 @@ public class Spawner : MonoBehaviour, INetworkRunnerCallbacks
 {
     
     public NetworkPlayer playerPrefab;
+
+    //other components
+    CharacterInputHandler characterInputHandler;
     void Start()
     {
         
@@ -31,7 +34,12 @@ public class Spawner : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnInput(NetworkRunner runner, NetworkInput input){
 
-        
+        if(characterInputHandler == null && NetworkPlayer.Local != null){
+            characterInputHandler = NetworkPlayer.Local.GetComponent<CharacterInputHandler>();
+        }
+        if(characterInputHandler != null){
+            input.Set(characterInputHandler.GetNetworkInput());
+        }
     }
 
     public void OnPlayerLeft(NetworkRunner runner,PlayerRef player){}

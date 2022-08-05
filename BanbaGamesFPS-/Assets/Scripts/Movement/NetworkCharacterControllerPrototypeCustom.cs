@@ -6,7 +6,7 @@ using UnityEngine;
 [OrderBefore(typeof(NetworkTransform))]
 [DisallowMultipleComponent]
 // ReSharper disable once CheckNamespace
-public class NetworkCharacterControllerPrototype : NetworkTransform {
+public class NetworkCharacterControllerPrototypeCustom : NetworkTransform {
   [Header("Character Controller Settings")]
   public float gravity       = -20.0f;
   public float jumpImpulse   = 8.0f;
@@ -54,7 +54,7 @@ public class NetworkCharacterControllerPrototype : NetworkTransform {
     if (Controller == null) {
       Controller = GetComponent<CharacterController>();
 
-      Assert.Check(Controller != null, $"An object with {nameof(NetworkCharacterControllerPrototype)} must also have a {nameof(CharacterController)} component.");
+      Assert.Check(Controller != null, $"An object with {nameof(NetworkCharacterControllerPrototypeCustom)} must also have a {nameof(CharacterController)} component.");
     }
   }
 
