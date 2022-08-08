@@ -12,7 +12,13 @@ public static class Utils
     public static void SetRenderLayerInChildren(Transform transform,int layerNumber){
 
         foreach(Transform trans in transform.GetComponentInChildren<Transform>(true)){
+            
+            if(trans.CompareTag("IgnoreLayerChange")){
+                continue;
+            }
             trans.gameObject.layer = layerNumber;
+
+
         }
 
     }

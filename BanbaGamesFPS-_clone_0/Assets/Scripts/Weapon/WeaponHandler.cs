@@ -9,6 +9,8 @@ public class WeaponHandler : NetworkBehaviour
     public bool isFiring { get; set; }
 
     public ParticleSystem fireParticleSystem;
+    public Transform aimPoint;
+    public LayerMask collisionLayers;
 
     float lastTimeFired = 0;
     void Start()
@@ -35,6 +37,36 @@ public class WeaponHandler : NetworkBehaviour
         }
 
         StartCoroutine(FireeEffectCO());
+
+        Runner.LagCompensation.Raycast(aimPoint.position,aimForwardVector,100,Object.InputAuthority, out var hitInfo,collisionLayers, HitOptions.IncludePhysX);
+
+        float hitDistance = 100;
+        bool isHitOtherPlayer = false;
+
+        if(hitInfo.Distance > 0){
+            hitDistance = hitInfo.Distance;
+        }
+        if(hitInfo.Hitbox != null){
+
+            Debug.Log($"{Time.time} hit hitbox {hitInfo.Hitbox.transform.root.name}");
+            
+            isHitOtherPlayer = true;
+        }
+        else if(hitInfo.Collider != null){
+
+            Debug.Log($"{Time.time} hit PhysX collider {hitInfo.Collider.transform.name}");
+        }
+
+
+        // debug
+        if(isHitOtherPlayer){
+            Debug.DrawRay(aimPoint.position,aimForwardVector * hitDistance, Color.red,1);
+
+        }
+        else{
+            Debug.DrawRay(aimPoint.position,aimForwardVector * hitDistance, Color.green,1);
+        }
+
 
         lastTimeFired = Time.time;
     }

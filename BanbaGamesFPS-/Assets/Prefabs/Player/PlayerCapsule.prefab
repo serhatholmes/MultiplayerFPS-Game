@@ -1,5 +1,54 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2510874776219190302
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8898375875452909793}
+  - component: {fileID: 1397707493889139231}
+  m_Layer: 11
+  m_Name: HitBox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8898375875452909793
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2510874776219190302}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8997996947095583982}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1397707493889139231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2510874776219190302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1014831617, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Type: 1
+  SphereRadius: 0
+  BoxExtents: {x: 0.6, y: 1, z: 0.6}
+  Offset: {x: 0, y: 0, z: 0}
+  Root: {fileID: 7393787038578149529}
+  GizmosColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!1 &4702744456258136011
 GameObject:
   m_ObjectHideFlags: 0
@@ -466,6 +515,7 @@ GameObject:
   - component: {fileID: 8005182927890799693}
   - component: {fileID: 3518522967075520817}
   - component: {fileID: 7892290973086971421}
+  - component: {fileID: 7393787038578149529}
   m_Layer: 0
   m_Name: PlayerCapsule
   m_TagString: Player
@@ -488,6 +538,7 @@ Transform:
   - {fileID: 5393215578589016641}
   - {fileID: 6536116734246321536}
   - {fileID: 3962014852642179360}
+  - {fileID: 8898375875452909793}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -549,6 +600,7 @@ MonoBehaviour:
   - {fileID: 8645481420705665081}
   - {fileID: 8005182927890799693}
   - {fileID: 7892290973086971421}
+  - {fileID: 7393787038578149529}
   SimulationBehaviours: []
 --- !u!114 &8645481420705665081
 MonoBehaviour:
@@ -625,6 +677,28 @@ MonoBehaviour:
   _interpolationDataSource: 0
   _isFiring: 0
   fireParticleSystem: {fileID: 8377252957622572367}
+  aimPoint: {fileID: 3962014852642179360}
+  collisionLayers:
+    serializedVersion: 2
+    m_Bits: 2049
+--- !u!114 &7393787038578149529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8616685848737228372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1039544458, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  BroadRadius: 2.2247448
+  Offset: {x: 0, y: 0, z: 0}
+  GizmosColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  Hitboxes:
+  - {fileID: 1397707493889139231}
 --- !u!1 &9124653679043911786
 GameObject:
   m_ObjectHideFlags: 0
@@ -916,15 +990,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b22694a2871e424499da67b69d29b44b, type: 3}
---- !u!198 &8377252957622572367 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 4769992690086720973, guid: b22694a2871e424499da67b69d29b44b,
-    type: 3}
-  m_PrefabInstance: {fileID: 3923638280989122690}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1389985189722542692 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2682359839900594918, guid: b22694a2871e424499da67b69d29b44b,
+    type: 3}
+  m_PrefabInstance: {fileID: 3923638280989122690}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &8377252957622572367 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 4769992690086720973, guid: b22694a2871e424499da67b69d29b44b,
     type: 3}
   m_PrefabInstance: {fileID: 3923638280989122690}
   m_PrefabAsset: {fileID: 0}
