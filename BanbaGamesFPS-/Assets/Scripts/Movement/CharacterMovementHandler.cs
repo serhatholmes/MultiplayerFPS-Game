@@ -5,11 +5,7 @@ using Fusion;
 
 public class CharacterMovementHandler : NetworkBehaviour
 {
-    Vector2 viewInput;
-
-    //rotation
-    float cameraRotationX = 0;
-
+  
     //other components
     NetworkCharacterControllerPrototypeCustom networkCharacterControllerPrototypeCustom;
     Camera localCamera;
@@ -23,20 +19,18 @@ public class CharacterMovementHandler : NetworkBehaviour
         
     }
 
-    void Update()
-    {
-        cameraRotationX += viewInput.y * Time.deltaTime * networkCharacterControllerPrototypeCustom.viewUpDownRotationSpeed;
-        cameraRotationX = Mathf.Clamp(cameraRotationX, -90,90);
-
-        localCamera.transform.localRotation = Quaternion.Euler(cameraRotationX,0,0);
-    }
     public override void FixedUpdateNetwork(){
 
         // get the input from network
         if(GetInput(out NetworkInputData networkInputData)){
 
-            //rotate the view
-            networkCharacterControllerPrototypeCustom.Rotate(networkInputData.rotationInput);
+            //rotate the transform according to the client aim vector
+            transform.forward = networkInputData.aimForwardVector;
+
+            //Cancel out rotation on X axis as we dont want our character to tilt
+            Quaternion rotation = transform.rotation;
+            rotation.eulerAngles = new Vector3(0,rotation.eulerAngles.y, rotation.eulerAngles.z);
+            transform.rotation = rotation;
 
 
             //move
@@ -64,9 +58,4 @@ public class CharacterMovementHandler : NetworkBehaviour
         }
     }
 
-    public void SetViewInputVector(Vector2 viewInput){
-
-        this.viewInput = viewInput;
-
-    }
 }
