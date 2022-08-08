@@ -7,6 +7,7 @@ public class CharacterInputHandler : MonoBehaviour
     Vector2 moveInputVector = Vector2.zero;
     Vector2 viewInputVector = Vector2.zero;
     bool isJumpButtonPressed = false;
+    
 
     CharacterMovementHandler characterMovementHandler;
 
@@ -32,19 +33,31 @@ public class CharacterInputHandler : MonoBehaviour
         moveInputVector.x = Input.GetAxis("Horizontal");
         moveInputVector.y = Input.GetAxis("Vertical");
 
-        isJumpButtonPressed = Input.GetButtonDown("Jump");
+        //jump
+        if(Input.GetButtonDown("Jump")){
+            isJumpButtonPressed = true;
+        }
+
+        
     }
 
     public NetworkInputData GetNetworkInput(){
         NetworkInputData networkInputData = new NetworkInputData();
 
+        //aim data
+        
+
         //view data
         networkInputData.rotationInput = viewInputVector.x;
 
+        //move data
         networkInputData.movementInput = moveInputVector;
 
         //jump data
         networkInputData.isJumpedPressed = isJumpButtonPressed;
+
+        //reset veriables now that we have read their states
+        isJumpButtonPressed = false;
 
         return networkInputData;
     }
