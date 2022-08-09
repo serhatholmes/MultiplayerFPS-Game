@@ -65,7 +65,7 @@ public class CharacterInputHandler : MonoBehaviour
         networkInputData.movementInput = moveInputVector;
 
         //jump data
-        networkInputData.isJumpedPressed = isJumpButtonPressed;
+        networkInputData.isJumpPressed = isJumpButtonPressed;
 
         //fire data
         networkInputData.isFireButtonPressed = isFireButtonPressed;

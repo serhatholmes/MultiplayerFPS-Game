@@ -13,6 +13,15 @@ public class WeaponHandler : NetworkBehaviour
     public LayerMask collisionLayers;
 
     float lastTimeFired = 0;
+
+    //other components
+    HPHandler hpHandler;
+    NetworkPlayer networkPlayer;
+
+    private void Awake() {
+        hpHandler = GetComponent<HPHandler>();
+        networkPlayer = GetComponent<NetworkPlayer>();
+    }
     void Start()
     {
         
@@ -20,6 +29,10 @@ public class WeaponHandler : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
+        if(hpHandler.isDead){
+            return;
+        }
+
         //get the input from the network
         if(GetInput(out NetworkInputData networkInputData)){
             if (networkInputData.isFireButtonPressed){
@@ -50,6 +63,10 @@ public class WeaponHandler : NetworkBehaviour
 
             Debug.Log($"{Time.time} hit hitbox {hitInfo.Hitbox.transform.root.name}");
             
+            if(Object.HasInputAuthority){
+                hitInfo.Hitbox.transform.root.GetComponent<HPHandler>().OnTakeDamage(networkPlayer.nickName.ToString());
+            }
+
             isHitOtherPlayer = true;
         }
         else if(hitInfo.Collider != null){
@@ -61,10 +78,13 @@ public class WeaponHandler : NetworkBehaviour
         // debug
         if(isHitOtherPlayer){
             Debug.DrawRay(aimPoint.position,aimForwardVector * hitDistance, Color.red,1);
+            Debug.DrawLine(aimPoint.position,aimForwardVector * hitDistance, Color.red,1);
 
         }
         else{
             Debug.DrawRay(aimPoint.position,aimForwardVector * hitDistance, Color.green,1);
+            Debug.DrawLine(aimPoint.position,aimForwardVector * hitDistance, Color.green,1);
+
         }
 
 
@@ -81,7 +101,7 @@ public class WeaponHandler : NetworkBehaviour
 
     static void OnFireChanged(Changed<WeaponHandler> changed){
 
-        Debug.Log($"{Time.time} OnFireChanged value {changed.Behaviour.isFiring}");
+        //Debug.Log($"{Time.time} OnFireChanged value {changed.Behaviour.isFiring}");
 
         bool isFiringCurrent = changed.Behaviour.isFiring;
 
