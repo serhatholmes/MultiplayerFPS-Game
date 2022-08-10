@@ -78,7 +78,8 @@ public class WeaponHandler : NetworkBehaviour
         // debug
         if(isHitOtherPlayer){
             Debug.DrawRay(aimPoint.position,aimForwardVector * hitDistance, Color.red,1);
-            Debug.DrawLine(aimPoint.position,aimForwardVector * hitDistance, Color.red,1);
+            //LineRenderer(aimPoint.position,aimForwardVector*hitDistance, Color.red,0.8f);
+            //Debug.DrawLine(aimPoint.position,aimForwardVector * hitDistance, Color.red,1);
 
         }
         else{
