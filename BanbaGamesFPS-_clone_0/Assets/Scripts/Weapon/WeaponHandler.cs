@@ -18,13 +18,16 @@ public class WeaponHandler : NetworkBehaviour
     HPHandler hpHandler;
     NetworkPlayer networkPlayer;
 
+    public LineRenderer aimLine;
+
     private void Awake() {
         hpHandler = GetComponent<HPHandler>();
         networkPlayer = GetComponent<NetworkPlayer>();
     }
     void Start()
     {
-        
+        aimLine = GetComponent<LineRenderer>();
+        aimLine.enabled = false;
     }
 
     public override void FixedUpdateNetwork()
@@ -77,12 +80,16 @@ public class WeaponHandler : NetworkBehaviour
 
         // debug
         if(isHitOtherPlayer){
+
+            aimLine.enabled = true;
             Debug.DrawRay(aimPoint.position,aimForwardVector * hitDistance, Color.red,1);
-            //LineRenderer(aimPoint.position,aimForwardVector*hitDistance, Color.red,0.8f);
+            
             //Debug.DrawLine(aimPoint.position,aimForwardVector * hitDistance, Color.red,1);
 
         }
         else{
+
+            aimLine.enabled = true;
             Debug.DrawRay(aimPoint.position,aimForwardVector * hitDistance, Color.green,1);
             Debug.DrawLine(aimPoint.position,aimForwardVector * hitDistance, Color.green,1);
 
